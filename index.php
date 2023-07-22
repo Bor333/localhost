@@ -5,6 +5,7 @@ if (isset($_GET['send'])) {
     $arg1 = $_GET['arg1'];
     $arg2 = $_GET['arg2'];
     $operation = $_GET['operation'];
+    var_dump($_GET);
 } else {
     $res = 0;
     $arg1 = 0;
@@ -21,6 +22,7 @@ if (isset($_GET['send'])) {
 </head>
 <body>
 <form action="index.php" method="GET">
+    <input type="checkbox" checked name="isadmin" value="1">
     <input type="text" name="arg1" value="<?=$arg1?>">
     <select name="operation" id="">
         <option <?php if ($_GET['operation'] == '+') echo 'selected';?> value="+">+ </option>
