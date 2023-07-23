@@ -1,38 +1,34 @@
-<?php
-include 'mathOperations.php';
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-if (isset($_GET['send'])) {
-    $arg1 = $_GET['arg1'];
-    $arg2 = $_GET['arg2'];
-    $operation = $_GET['operation'];
-    var_dump($_GET);
-} else {
-    $res = 0;
-    $arg1 = 0;
-    $arg2 = 0;
-    $operation = '+';
-}
-?>
+   <input type="text" id="val1" value="">
+   <button class='action'> + </button>
+   <input type="text" id="val2" value="">
+   <button class='action'> = </button>
+   <input type="text" id="val3" value=""><br>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-<form action="index.php" method="GET">
-    <input type="checkbox" checked name="isadmin" value="1">
-    <input type="text" name="arg1" value="<?=$arg1?>">
-    <select name="operation" id="">
-        <option <?php if ($_GET['operation'] == '+') echo 'selected';?> value="+">+ </option>
-        <option <?php if ($_GET['operation'] == '-') echo 'selected';?> value="-">-</option>
-        <option <?php if ($_GET['operation'] == '*') echo 'selected';?> value="*">*</option>
-        <option <?php if ($_GET['operation'] == '/') echo 'selected';?> value="/">/</option>
-    </select>
-    <input type="text" name="arg2" value="<?=$arg2?>">
-    <input type="submit" value="=" name="send">
-    <input type="text" name="result" readonly value="<?=MathOperations($arg1, $arg2, $operation)?>">
-</form>
-</body>
-</html>
+<script>
+$(document).ready(function(){
+    $(".action").on('click', function(){
+        var operand1 = $("#val1").val()
+        var operand2 = $("#val2").val()
+
+        $.ajax({
+            url: "add.php",
+            type: "POST",
+			dataType : "json",
+            data:{
+                operand1: operand1,
+                operand2: operand2
+            },
+            error: function() {alert("Что-то пошло не так...");},
+            success: function(answer){
+           	$('#val3').val(answer.result);				
+            }
+            
+        })
+    });
+
+});
+</script>
+
+	
